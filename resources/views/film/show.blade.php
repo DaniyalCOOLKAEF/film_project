@@ -43,26 +43,48 @@
         }
         .buttons {
             text-align: center;
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
         }
-        .buttons a {
+        .buttons a, .buttons form {
             display: inline-block;
-            margin: 0 10px;
+        }
+        .buttons button, .buttons a {
             padding: 10px 20px;
             font-size: 16px;
             background-color: #4CAF50;
             color: white;
-            text-decoration: none;
+            border: none;
             border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
         }
-        .buttons a:hover {
+        .buttons button:hover, .buttons a:hover {
             background-color: #45a049;
+        }
+        .poster img {
+            max-width: 200px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .status {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>{{ $film->title }}</h1>
-
+        <div class="status">
+            Status: {{ $film->published ? 'Published' : 'Not Published' }}
+        </div>
+        <div class="poster">
+            <img src="{{ $film->link_url }}" alt="{{ $film->title }} poster">
+        </div>
         <div class="section">
             <table>
                 <thead>
@@ -89,9 +111,20 @@
                 </tbody>
             </table>
         </div>
-
         <div class="buttons">
             <a href="{{ route('film.edit', $film->id) }}">Edit</a>
+            @if (!$film->published)
+                <form action="{{ route('film.publish', $film->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <button type="submit">Publish</button>
+                </form>
+            @endif
+            <form action="{{ route('film.delete', $film->id) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" onclick="return confirm('Are you sure you want to delete this film?')">Delete</button>
+            </form>
             <a href="{{ route('film.index') }}">Go Back</a>
         </div>
     </div>

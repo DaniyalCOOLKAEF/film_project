@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movies and Genres</title>
+    <title>Add New Film</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,102 +19,88 @@
             max-width: 800px;
             margin: 0 auto;
         }
-        /* table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 40px;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-        tr:hover {
-            background-color: #f5f5f5;
-        } */
-        .section {
-            margin-bottom: 20px;
-        }
         form {
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            text-align: center;
         }
-        form label {
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
             display: block;
-            margin-bottom: 3px;
-            margin-top: 10px;
+            margin-bottom: 5px;
             font-weight: bold;
-            font-size: 20px;
-            text-align: left;
-            margin-left: 4%;
         }
-        form input[type="text"] {
-            width: 90%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-        }   
-        .image {
-            margin-top: 10px;
-            
-        }
-        .image input[type="file"] {
-            width: 90%;
+        input[type="text"], input[type="file"], select {
+            width: 95%;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 14px;
         }
-        select{
-            width: 93%;
+        select {
             height: 150px;
-            padding: 10px;
-            border: 1px solid #ddd;
+        }
+        .buttons {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .buttons button, .buttons a {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
             border-radius: 4px;
-            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .buttons a:hover, .buttons button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Movies and Genres</h1>
-           
-            <form action="{{ route('film.store') }}" method="post">
+        <h1>Add New Film</h1>
+        <form action="{{ route('film.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @if ($errors->any())
+                <div class="error">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" name="title" id="title" placeholder="Enter film title..." required>
-            
-                <div class="image">
-                <label for="image">Image</label>
-                <!-- <input type="file" name="image" id="image" placeholder="Enter film genre..."> -->
-                <input type="text" name="image" id="image" placeholder="Enter film genre...">
-                </div>
-
-                <div class="form-group">
-                <label for="genre_id">Genres</label>
+            </div>
+            <div class="form-group">
+                <label for="link">Poster</label>
+                <input type="file" name="link" id="link" accept="image/*">
+            </div>
+            <div class="form-group">
+                <label for="genre_ids">Genres</label>
                 <select name="genre_id[]" id="genre_id" multiple>
                     @foreach ($genres as $genre)
                         <option value="{{ $genre->id }}">{{ $genre->name }}</option>
                     @endforeach
                 </select>
             </div>
-                
-
-                <input type="submit" value="Add Film" style="margin-top: 20px; padding: 10px 20px; font-size: 16px; background-color: #4CAF50; color: white; border: none; border-radius: 4px;">
-            </form>
-            
-        </div>
+            <div class="buttons">
+                <button type="submit">Save</button>
+                <a href="{{ route('film.index') }}">Cancel</a>
+            </div>
+        </form>
     </div>
 </body>
 </html>

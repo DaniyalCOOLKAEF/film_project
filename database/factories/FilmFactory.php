@@ -3,14 +3,17 @@
 namespace Database\Factories;
 
 use App\Models\Film;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Providers\Faker\FilmTitleProvider;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\DB;
+
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\=Film>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Film>
  */
 class FilmFactory extends Factory
 {
     protected $model = Film::class;
+
     /**
      * Define the model's default state.
      *
@@ -19,9 +22,15 @@ class FilmFactory extends Factory
     public function definition(): array
     {
         $this->faker->addProvider(new FilmTitleProvider($this->faker));
+
         return [
             'title' => $this->faker->filmTitle(),
-            'link' => $this->faker->url()
+            'published' => false, // По умолчанию не опубликован
+            'link' => 'images/noposter.png', // Путь к дефолтному изображению
+            
         ];
     }
+
+  
+    
 }

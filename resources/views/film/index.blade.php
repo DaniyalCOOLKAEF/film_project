@@ -60,8 +60,9 @@
                 <tbody>
                     @foreach ($films as $film)
                         <tr>
-                            <td><a href="{{ route('film.show', $film->id) }}">{{ $film->id }}</a></td>
-                            <td>{{ $film->title }}</td>
+                            <td>{{ $film->id }}</td>
+                            <td><a href="{{ route('film.show', $film->id) }}">{{ $film->title }}</a></td>
+                            
                         
                         </tr>
                     @endforeach

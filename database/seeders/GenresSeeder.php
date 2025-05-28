@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Film;
 use Faker\Factory as Faker;
 
-class GenreFilmTableSeeder extends Seeder
+class GenresSeeder extends Seeder
 {
     public function run()
     {
