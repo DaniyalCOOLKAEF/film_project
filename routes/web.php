@@ -21,4 +21,4 @@ Route::get('/films/{film}/edit', ['App\Http\Controllers\FilmController', 'edit']
 Route::put('/films/{film}', ['App\Http\Controllers\FilmController', 'update'])->name('film.update');
 Route::delete('/films/{film}', ['App\Http\Controllers\FilmController', 'delete'])->name('film.delete');
 Route::put('/films/{film}/publish', ['App\Http\Controllers\FilmController', 'publish'])->name('film.publish');
-
+Route::get('/genres/{genre}', ['App\Http\Controllers\FilmController', 'show1'])->name('genre.show');

@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- В <head> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <title>Movies and Genres</title>
     <style>
         body {
@@ -69,6 +72,9 @@
                 </tbody>
             </table>
         </div>
+        <div class="mb-3">
+            {{ $films->links() }}
+        </div>
 
         <div class="section">
             <h2>Genres</h2>
@@ -83,7 +89,8 @@
                     @foreach ($genres as $genre)
                         <tr>
                             <td>{{ $genre->id }}</td>
-                            <td>{{ $genre->name }}</td>
+                            <td><a href="{{ route('genre.show', $genre->id) }}">{{ $genre->name }}</a></td>
+                            
                         </tr>
                     @endforeach
                 </tbody>

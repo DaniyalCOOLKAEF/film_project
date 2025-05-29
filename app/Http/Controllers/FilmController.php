@@ -15,9 +15,9 @@ class FilmController extends BaseController
 
     public function index()
     {
-        $films = Film::with('genres')->get();
+        $films = Film::with('genres')->paginate(10);
         $genres = Genre::all();
-        return view('film.index', compact('films', 'genres'));
+    return view('film.index', compact('films', 'genres'));
     }
 
     public function create()
@@ -61,7 +61,13 @@ class FilmController extends BaseController
         $film->load('genres');
         return view('film.show', compact('film'));
     }
-
+    
+    public function show1(Genre $genre)
+    {
+        // Загружаем фильмы, связанные с жанром
+        $genre->load('films');
+        return view('film.show1', compact('genre'));
+    }
     public function edit(Film $film)
     {
         $genres = Genre::all();
