@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,43 +12,56 @@
             padding: 20px;
             background-color: #f4f4f4;
         }
+
         h1 {
             text-align: center;
             color: #333;
         }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
         }
+
         form {
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
+
         .form-group {
             margin-bottom: 15px;
         }
+
         label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
-        input[type="text"], input[type="file"], select {
+
+        input[type="text"],
+        input[type="file"],
+        select {
             width: 95%;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 14px;
+
         }
+
         select {
             height: 150px;
         }
+
         .buttons {
             text-align: center;
             margin-top: 10px;
         }
-        .buttons button, .buttons a {
+
+        .buttons button,
+        .buttons a {
             padding: 10px 20px;
             font-size: 16px;
             background-color: #4CAF50;
@@ -57,15 +71,19 @@
             text-decoration: none;
             cursor: pointer;
         }
-        .buttons a:hover, .buttons button:hover {
+
+        .buttons a:hover,
+        .buttons button:hover {
             background-color: #45a049;
         }
+
         .error {
             color: red;
             margin-bottom: 10px;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Add New Film</h1>
@@ -103,4 +121,5 @@
         </form>
     </div>
 </body>
+
 </html>

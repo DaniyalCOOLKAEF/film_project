@@ -17,7 +17,7 @@ class FilmController extends BaseController
     {
         $films = Film::with('genres')->paginate(10);
         $genres = Genre::all();
-    return view('film.index', compact('films', 'genres'));
+        return view('film.index', compact('films', 'genres'));
     }
 
     public function create()
@@ -44,7 +44,7 @@ class FilmController extends BaseController
         // Создание фильма
         $film = Film::create([
             'title' => $data['title'],
-            'is_published' => false, // По умолчанию не опубликован
+            'published' => false, // По умолчанию не опубликован
             'link' => $linkPath,
         ]);
 
@@ -61,7 +61,7 @@ class FilmController extends BaseController
         $film->load('genres');
         return view('film.show', compact('film'));
     }
-    
+
     public function show1(Genre $genre)
     {
         // Загружаем фильмы, связанные с жанром
@@ -75,35 +75,35 @@ class FilmController extends BaseController
     }
 
     public function update(Film $film)
-{
-    $data = request()->validate([
-        'title' => 'required|string|max:255',
-        'genre_id' => 'nullable|array',
-        'genre_id.*' => 'exists:genres,id',
-        'link' => 'nullable|file|image|max:2048',
-    ]);
+    {
+        $data = request()->validate([
+            'title' => 'required|string|max:255',
+            'genre_id' => 'nullable|array',
+            'genre_id.*' => 'exists:genres,id',
+            'link' => 'nullable|file|image|max:2048',
+        ]);
 
-    // Обработка изображения
-    $updateData = ['title' => $data['title']];
-    if (isset($data['link'])) {
-        // Удаляем старое изображение, если оно не дефолтное
-        if ($film->link && $film->link !== 'images/default-poster.jpg') {
-            Storage::disk('public')->delete($film->link);
+        // Обработка изображения
+        $updateData = ['title' => $data['title']];
+        if (isset($data['link'])) {
+            // Удаляем старое изображение, если оно не дефолтное
+            if ($film->link && $film->link !== 'images/default-poster.jpg') {
+                Storage::disk('public')->delete($film->link);
+            }
+            $updateData['link'] = $data['link']->store('posters', 'public');
         }
-        $updateData['link'] = $data['link']->store('posters', 'public');
+
+        $film->update($updateData);
+
+        // Синхронизация жанров
+        if (!empty($data['genre_id'])) {
+            $film->genres()->sync($data['genre_id']);
+        } else {
+            $film->genres()->detach();
+        }
+
+        return redirect()->route('film.show', $film->id)->with('success', 'Film updated successfully.');
     }
-
-    $film->update($updateData);
-
-    // Синхронизация жанров
-    if (!empty($data['genre_id'])) {
-        $film->genres()->sync($data['genre_id']);
-    } else {
-        $film->genres()->detach();
-    }
-
-    return redirect()->route('film.show', $film->id)->with('success', 'Film updated successfully.');
-}
 
     public function delete(Film $film)
     {
@@ -126,4 +126,5 @@ class FilmController extends BaseController
         $film->update(['published' => true]);
         return redirect()->route('film.show', $film->id)->with('success', 'Film published successfully.');
     }
+
 }
