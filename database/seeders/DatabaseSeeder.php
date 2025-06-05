@@ -15,13 +15,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $genres = Genre::all();
+        $usedTitles = Film::pluck('title')->toArray();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $count = 0;
+        while ($count < 6) {
+            $filmData = Film::factory()->make()->toArray();
 
-        
+            if (in_array($filmData['title'], $usedTitles)) {
+                continue; // название уже существует — пробуем снова
+            }
+
+            $film = Film::create($filmData);
+            $film->genres()->attach($genres->random(rand(1, 3))->pluck('id')->toArray());
+
+            $usedTitles[] = $filmData['title'];
+            $count++;
+        }
     }
 }

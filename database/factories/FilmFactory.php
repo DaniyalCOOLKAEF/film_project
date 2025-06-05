@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Models\Film;
 use App\Providers\Faker\FilmTitleProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\DB;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Film>
@@ -27,10 +26,7 @@ class FilmFactory extends Factory
             'title' => $this->faker->filmTitle(),
             'published' => false, // По умолчанию не опубликован
             'link' => 'images/noposter.png', // Путь к дефолтному изображению
-            
+
         ];
     }
-
-  
-    
 }

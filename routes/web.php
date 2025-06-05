@@ -19,6 +19,6 @@ Route::post('/films/store', ['App\Http\Controllers\FilmController', 'store'])->n
 Route::get('/films/{film}', ['App\Http\Controllers\FilmController', 'show'])->name('film.show');
 Route::get('/films/{film}/edit', ['App\Http\Controllers\FilmController', 'edit'])->name('film.edit');
 Route::put('/films/{film}', ['App\Http\Controllers\FilmController', 'update'])->name('film.update');
-Route::delete('/films/{film}', ['App\Http\Controllers\FilmController', 'delete'])->name('film.delete');
+Route::delete('/films/{film}', ['App\Http\Controllers\FilmController', 'destroy'])->name('film.delete');
 Route::put('/films/{film}/publish', ['App\Http\Controllers\FilmController', 'publish'])->name('film.publish');
-Route::get('/genres/{genre}', ['App\Http\Controllers\FilmController', 'show1'])->name('genre.show');
+Route::get('/genres/{genre}', ['App\Http\Controllers\GenreController', 'show'])->name('genre.show');
